@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Favorite Books </title>
+    <link rel="shortcut icon"
+        href="https://icons-for-free.com/iconfiles/png/512/book+books+education+knowledge+learning+reading+icon-1320085877896372664.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Yusei+Magic&display=swap" rel="stylesheet">
+</head>
+<style>
+    * {
+        font-family: 'Varela Round', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #fc5296;
+        background-image: linear-gradient(to right, #fc5296 0%, #f67062 74%);
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 35px;
+        height: 50px;
+        padding: 7px;
+        margin-bottom: 20px;
+        color: antiquewhite;
+    }
+
+    form {
+        background-color: rgb(255 250 250 / 59%);
+        width: 50%;
+        margin: auto;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+        border-radius: 20px;
+        margin-top: 50px;
+    }
+
+    input {
+        display: flex;
+        text-indent: 8px;
+        background-color: #fefcfb40;
+        border: none;
+        border-bottom: 2px solid;
+    }
+
+    .img-and-audio {
+        margin-left: 30%;
+
+    }
+
+    .big-input {
+        height: 40px;
+        width: 500px;
+    }
+
+    button {
+        height: 40px;
+        width: 200px;
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+
+    label {
+        width: 200px;
+    }
+
+    .cover {
+        margin-left: -45%;
+    }
+</style>
+
+<body>
+    <div class="header">
+        <h1> Favorite books </h1>
+        <div class="img-and-audio">
+            <img src="https://cdn2.iconfinder.com/data/icons/objects-23/50/1F4D9-orange-book-512.png" alt="Books"
+                width="20%">
+            <audio controls></audio>
+        </div>
+    </div>
+    <form>
+        <div class="form-div">
+            <input type="text" id="fullname" name="fullname" class="big-input" placeholder="Full Name">
+            <br>
+            <br>
+            <input type="text" id="title" name="title" class="big-input" placeholder="Title">
+            <br>
+            <br>
+            <input type="text" id="author" name="author" class="big-input" placeholder="Author">
+            <br>
+            <br>
+            <input type="text" id="colour" name="colour" class="big-input" placeholder="Colour">
+            <br>
+            <br>
+        </div>
+        <div class="cover">
+            <label for="Cover type:">
+                <b> Cover type:<b>
+            </label>
+            <select name="coverType">
+                <option value="paperback">Paperback</option>
+                <option value="harcover">Hardcover</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <input type="text" id="numberOfPages" name="numberOfPages" class="big-input" placeholder="Number of pages">
+            <br>
+            <br>
+            <input type="text" id="price" name="price" class="big-input" placeholder="Price">
+            <br>
+            <br>
+            <input type="text" id="currency" name="currency" class="big-input" placeholder="Currency">
+            <br>
+            <br>
+            <label for="Lng"> Language: </label>
+            <br>
+            <br>
+            <label for="lng"> English </label>
+            <input type="radio" id="english" name="language" value="English">
+            <br>
+            <label for="lng"> Armenian </label>
+            <input type="radio" id="armenian" name="language" value="Armenian">
+            <br>
+            <label for="lng"> French </label>
+            <input type="radio" id="french" name="language" value="French">
+            <br>
+            <label for="lng"> Russian </label>
+            <input type="radio" id="russian" name="language" value="Russian">
+            <br>
+            <label for="other"> Other: </label>
+            <input type="radio" id="other" name="language" value="Other">
+            <br>
+            <input type="text" id="title" name="languageValue" class="big-input" placeholder="Language">
+            <br>
+            <br>
+        </div>
+        <div>
+            <input type="text" id="text" name="edition" class="big-input" placeholder="Edition">
+            <br>
+            <br>
+            <input type="text" id="text" name="dimensions" class="big-input" placeholder="Dimensions">
+            <br>
+            <br>
+            <input type="text" id="text" name="publisher" class="big-input" placeholder="Publisher">
+            <br>
+            <br>
+            <input type="date" id="Date" name="publishingData" class="big-input" placeholder="Publishing Date">
+            <br>
+            <br>
+            <input type="date" id="date" name="originalPublishingData" class="big-input"
+                placeholder="Original Publishing Date">
+            <br>
+            <br>
+            <input type="text" id="text" name="genre" class="big-input" placeholder="Genre">
+            <br>
+            <br>
+            <input type="text" id="text" name="ageRestriction" class="big-input" placeholder="Age Restriction">
+            <br>
+            <br>
+            <button type="button" id="submitButton">Submit</button>
+        </div>
+    </form>
+    <script>
+        let submitButton = document.getElementById('submitButton');
+
+        submitButton.addEventListener('click', function () {
+            let form = document.forms[0],
+                formData = new FormData(form),
+                bookList = JSON.parse(localStorage['bookList'] || '[]'),
+                book = {},
+                bookListJson,
+                userName;
+
+            book.id = bookList.length+1;
+
+            for (let data of formData) {
+                book[data[0]] = data[1] || 'N/A';
+            }
+
+            bookList.push(book);
+            bookListJson = JSON.stringify(bookList);
+
+            localStorage['bookList'] = bookListJson;
+        });
+    </script>
+</body>
+
+</html>

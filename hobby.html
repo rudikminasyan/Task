@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Favorite Hobby </title>
+    <link rel="shortcut icon"
+        href="https://icons-for-free.com/iconfiles/png/512/book+books+education+knowledge+learning+reading+icon-1320085877896372664.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Yusei+Magic&display=swap" rel="stylesheet">
+</head>
+<style>
+    * {
+        font-family: 'Varela Round', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #fc5296;
+        background-image: linear-gradient(to right, #fc5296 0%, #f67062 74%);
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 35px;
+        height: 50px;
+        padding: 7px;
+        margin-bottom: 20px;
+        color: antiquewhite;
+    }
+
+    form {
+        background-color: rgb(255 250 250 / 59%);
+        width: 50%;
+        margin: auto;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+        border-radius: 20px;
+        margin-top: 50px;
+    }
+
+    input {
+        display: flex;
+        text-indent: 8px;
+        background-color: #fefcfb40;
+        border: none;
+        border-bottom: 2px solid;
+    }
+
+    .img-and-audio {
+        margin-left: 30%;
+
+    }
+
+    .big-input {
+        height: 40px;
+        width: 500px;
+    }
+
+    button {
+        height: 40px;
+        width: 200px;
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+
+    label {
+        width: 200px;
+    }
+
+    .cover {
+        margin-left: -45%;
+    }
+</style>
+
+<body>
+    <div class="header">
+        <h1>Favorite hobby</h1>
+        <div class="img-and-audio">
+            <img src="https://cdn2.iconfinder.com/data/icons/objects-23/50/1F4D9-orange-book-512.png" alt="Books"
+                width="20%">
+            <audio controls></audio>
+        </div>
+    </div>
+    <form>
+        <div class="form-div">
+            <input type="text" id="fullname" name="fullname" class="big-input" placeholder="Full Name">
+            <br>
+            <label>Gender</label>
+            <br>
+            <br>
+            <label for="male">Male</label>
+            <input type="radio" id="male" name="gender" value="Male">
+            <br>
+            <label for="female">Female</label>
+            <input type="radio" id="female" name="gender" value="Female">
+            <br>
+            <label for="other">Other</label>
+            <input type="radio" id="other" name="other" value="Other">
+            <br>
+            <label for="Birth Date"></label>
+            <input type="date" id="birthdate" name="birthdate" class="big-input">
+            <br>
+            <br>
+            <input type="text" id="adress" name="adress" class="big-input" placeholder="Adress">
+            <br>
+            <br>
+            <input type="email" id="email" name="email" class="big-input" placeholder="Email">
+            <br>
+            <br>
+            <input type="text" id="phone" name="phone" class="big-input" placeholder="Phone Number">
+            <br>
+            <br>
+            <input type="text" id="facebook" name="facebook" class="big-input" placeholder="Facebook">
+            <br>
+            <br>
+            <input type="text" id="certeficate1" name="certeficate1" class="big-input" placeholder="Certeficate1">
+            <br>
+            <br>
+            <input type="text" id="certeficate2" name="certeficate2" class="big-input" placeholder="Certeficate2">
+            <br>
+            <br>
+            <input type="text" id="competitionInfo" name="competitionInfo" class="big-input"
+                placeholder="Competition Info">
+            <br>
+            <br>
+            <input type="text" id="experianceAndSkills" name="experianceAndSkills" class="big-input"
+                placeholder="Experiance And Skills">
+            <br>
+            <br>
+            <input type="text" id="storyBehind" name="storyBehind" class="big-input" placeholder="Story Behind">
+            <br>
+            <br>
+            <input type="text" id="benefits" name="benefits" class="big-input" placeholder="Benefits">
+            <br>
+            <br>
+            <input type="text" id="genre" name="genre" class="big-input" placeholder="Genre">
+            <br>
+            <br>
+            <input type="text" id="education" name="education" class="big-input" placeholder="Edition">
+            <br>
+            <br>
+            <input type="text" id="items" name="items" class="big-input" placeholder="Items">
+            <br>
+            <br>
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate" class="big-input">
+            <br>
+            <br>
+            <input type="text" id="frequency" name="frequency" class="big-input" placeholder="Frequency">
+            <br>
+            <br>
+            <input type="text" id="duration" name="duration" class="big-input" placeholder="Duration">
+            <br>
+            <br>
+            <input type="text" id="wayToPractice" name="wayToPractice" class="big-input" placeholder="Way To Practice">
+            <br>
+            <br>
+            <button type="button" id="submitButton">Submit</button>
+        </div>
+    </form>
+    <script>
+        let submitButton = document.getElementById('submitButton');
+
+        submitButton.addEventListener('click', function () {
+            let form = document.forms[0],
+                formData = new FormData(form),
+                hobbyList = JSON.parse(localStorage['hobbyList'] || '[]'),
+                hobby = {},
+                hobbyListJson,
+                userName;
+
+            hobby.id = hobbyList.length+1;
+
+            for (let data of formData) {
+                hobby[data[0]] = data[1] || 'N/A';
+            }
+
+            hobbyList.push(hobby);
+            hobbyListJson = JSON.stringify(hobbyList);
+
+            localStorage['hobbyList'] = hobbyListJson;
+        });
+    </script>
+</body>
+
+</html>
