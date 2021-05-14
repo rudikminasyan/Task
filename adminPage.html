@@ -5,240 +5,26 @@
     <title>Admin Page</title>
     <link rel="shortcut icon"
         href="https://icons-for-free.com/iconfiles/png/512/book+books+education+knowledge+learning+reading+icon-1320085877896372664.png">
+    <link rel="stylesheet" href="Content/Styles/AdminPage.css">
+    <script src="Content/Scripts/AdminManager.js"></script>
+    <script src="Content/Scripts/BaseElement.js"></script>
+    <script src="Content/Scripts/Item.js"></script>
+    <script src="Content/Scripts/EditPopup.js"></script>
 </head>
-
-<style>
-    * {
-        font-family: sans-serif;
-    }
-
-    html,
-    body {
-        height: 99%;
-    }
-
-    body {
-        background-image: linear-gradient(to right, #fc5296 0%, #f67062 74%);
-    }
-
-    .header {
-        display: flex;
-        justify-content: space-evenly;
-    }
-
-    .header>* {
-        width: 23%;
-        border: none;
-        background: rgb(255 236 236 / 80%);
-        font-size: 15px;
-        padding: 7px;
-        border-radius: 10px;
-    }
-
-    #main {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .item {
-        min-width: 275px;
-        margin: 10px;
-        background: #ffffffba;
-        padding: 10px;
-        border-radius: 10px;
-        margin-top: 40px;
-    }
-
-    .infoContainer {
-        margin: 5px;
-    }
-
-    button {
-        background: white;
-        border: none;
-        border-radius: 5px;
-        padding: 5px;
-        margin: 5px;
-    }
-
-    button img {
-        width: 25px;
-    }
-</style>
 
 <body>
     <div class="header">
-        <button onclick="loadBookData()">Book data</button>
-        <button onclick="loadMyBookData()">My book data</button>
-        <button onclick="loadHobbyData()">Hobby data</button>
-        <button onclick="loadMyHobbyData()">My hobby data</button>
+        <button onclick="loadBookData(main)">Book data</button>
+        <button onclick="loadMyBookData(main)">My book data</button>
+        <button onclick="loadHobbyData(main)">Hobby data</button>
+        <button onclick="loadMyHobbyData(main)">My hobby data</button>
     </div>
     <div class="main" id="main"></div>
 
     <script>
         const myUserName = 'Rudik Minasyan';
+
         let main = document.getElementById('main');
-
-        function loadBookData() {
-            let bookList = JSON.parse(localStorage['bookList']);
-
-            loadData(bookList, 'book');
-        }
-
-        function loadMyBookData() {
-            let bookList = JSON.parse(localStorage['bookList']);
-            myBookList = bookList.filter(book => book.fullname == myUserName);
-
-            loadData(myBookList, 'book');
-        }
-
-        function loadHobbyData() {
-            let hobbyList = JSON.parse(localStorage['hobbyList']);
-
-            loadData(hobbyList, 'hobby');
-        }
-
-        function loadMyHobbyData() {
-            let hobbyList = JSON.parse(localStorage['hobbyList']),
-                myHobbyList = hobbyList.filter(hobby => hobby.fullname == myUserName);
-
-            loadData(myHobbyList, 'hobby');
-        }
-
-        var deleteHobby = id => deleteItem('hobbyList', id);
-        var deleteBook = id => deleteItem('bookList', id);
-
-        function deleteItem(listName, id) {
-            let dataList = JSON.parse(localStorage[listName]),
-                newDataList = JSON.stringify(dataList.filter(item => item.id != id));
-
-            localStorage[listName] = newDataList;
-        }
-
-        var editHobby = id => editItem('hobby', id);
-        var editBook = id => editItem('book', id);
-
-        function editItem(type, id) {
-            let valueElements = document.querySelectorAll('.value'),
-                saveButton = document.createElement('button'),
-                saveButtonImage = document.createElement('img'),
-                buttonBar = document.querySelector('.buttonBar');
-
-            saveButton.type = 'button';
-            saveButtonImage.src = 'https://image.flaticon.com/icons/png/512/84/84297.png';
-
-            saveButton.append(saveButtonImage);
-            buttonBar.append(saveButton);
-
-            valueElements.forEach(item => {
-                let input = document.createElement('input');
-                input.value = item.innerText;
-                input.classList.add('valueInput');
-
-                item.parentElement.append(input);
-
-                item.remove();
-            });
-
-            saveButton.addEventListener('click', () => {
-                let inputs = document.querySelectorAll('.valueInput'),
-                    properties = document.querySelectorAll('.properties');
-
-                let item = { id };
-
-                inputs.forEach((input, index) => {
-                    let value = input.value;
-                    item[properties[index + 1].innerText] = value;
-
-                    let span = document.createElement('span');
-                    span.innerText = value;
-                    span.classList.add('value');
-
-                    input.parentElement.append(span);
-                    input.remove();
-                    saveButton.remove();
-                });
-
-                type == 'book' ? saveBook(id, item) : saveHobby(id, item);
-            });
-        }
-
-        var saveBook = (id, item) => saveItem(id, item, 'bookList');
-        var saveHobby = (id, item) => saveItem(id, item, 'hobbyList');
-
-        function saveItem(id, item, listName) {
-            let dataList = JSON.parse(localStorage[listName]),
-                itemIndex = dataList.findIndex(item => item.id == id);
-
-            dataList[itemIndex] = item;
-            newDataList = JSON.stringify(dataList);
-
-            localStorage[listName] = newDataList;
-        }
-
-        function loadData(data, type) {
-            main.innerHTML = '';
-
-            data.forEach(item => {
-                let form = document.createElement('form');
-
-                let itemContainer = document.createElement('div');
-                itemContainer.classList.add('item');
-
-                for (let property in item) {
-                    let infoContainer = document.createElement('div');
-                    infoContainer.classList.add('infoContainer');
-
-                    let b = document.createElement('b');
-                    b.innerText = `${property}: `;
-                    b.classList.add('properties');
-
-                    let span = document.createElement('span');
-                    span.innerText = item[property];
-
-                    property != 'id' && span.classList.add('value');
-
-                    infoContainer.append(b);
-                    infoContainer.append(span);
-
-                    itemContainer.append(infoContainer);
-                }
-
-                let buttonBar = document.createElement('div');
-                buttonBar.classList.add('buttonBar');
-
-                let deleteButton = document.createElement('button');
-                deleteButton.type = 'button';
-
-                let deleteButtonImage = document.createElement('img');
-                deleteButtonImage.src = 'https://www.pngrepo.com/download/21045/delete-button.png';
-
-                deleteButton.append(deleteButtonImage);
-                deleteButton.addEventListener('click', () => {
-                    type == 'book' ? deleteBook(item.id) : deleteHobby(item.id);
-
-                    itemContainer.remove();
-                });
-
-                let editButton = document.createElement('button');
-                editButton.type = 'button';
-
-                let editButtonImage = document.createElement('img');
-                editButtonImage.src = 'https://image.flaticon.com/icons/png/512/84/84380.png';
-
-                editButton.append(editButtonImage);
-                editButton.addEventListener('click', () => type == 'book' ? editBook(item.id) : editHobby(item.id));
-
-                buttonBar.append(editButton);
-                buttonBar.append(deleteButton);
-
-                itemContainer.append(buttonBar);
-
-                form.append(itemContainer);
-
-                main.append(form);
-            });
-        }
     </script>
 </body>
 

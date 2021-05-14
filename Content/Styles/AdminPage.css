@@ -1,0 +1,91 @@
+* {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background-image: linear-gradient(to right, #fc5296 0%, #f67062 74%);
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+
+.header>* {
+    width: 23%;
+    border: none;
+    background: rgb(255 236 236 / 80%);
+    font-size: 15px;
+    padding: 7px;
+    border-radius: 10px;
+}
+
+#main {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+item {
+    min-width: 275px;
+    margin: 10px;
+    background: #ffffffba;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+.infoContainer {
+    margin: 5px;
+    display: flex;
+}
+
+.nameContainer {
+    display: flex;
+}
+
+buttonBar > * {
+    display: inline-block;
+    background: white;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+overlay {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: rgb(0, 0, 0, 0.8);
+}
+
+EditPopup {
+    background: wheat;
+    padding: 15px;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom, #fc5296 0%, #f67062 74%);
+}
+
+EditPopup .nameContainer {
+    flex: 1;
+    /* justify-content: flex-end; */
+}
+
+EditPopup .valueContainer {
+    width: 160px;
+    text-align: right;
+}
